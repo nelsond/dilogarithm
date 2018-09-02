@@ -51,5 +51,6 @@ setup(
     ext_modules=[NumpyExtension(
                     'dilogarithm',
                     sources=[os.path.join(ext_dir, 'rdilogmodule.c')],
+                    extra_compile_args=['-std=c99'],
                     include_dirs=[numpy.get_include()])],
 )
