@@ -3,6 +3,8 @@ import pytest
 import numpy as np
 from numpy import pi, log, sqrt
 
+import mpmath as mp
+
 from dilogarithm import rdilog
 
 EPS = 1e-14
@@ -78,3 +80,15 @@ def test_rdilog_value_identies():
 
     assert (36*rdilog(1/2) - 36*rdilog(1/4) -
             12*rdilog(1/8) + 6*rdilog(1/64)) == pytest.approx(pi**2, EPS)
+
+
+def test_rdilog_agrees_with_mpmath_polylog():
+    xx = -1 * np.logspace(-10, 10, 10000)
+
+    mp_polylog_vec = np.vectorize(mp.fp.polylog,
+                                  otypes=(np.complex,),
+                                  excluded=(0, ))
+
+    mp_y = mp_polylog_vec(2, xx)
+
+    assert rdilog(xx) == pytest.approx(mp_y, EPS)
