@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7-dev"
+  - "nightly"
+
+install:
+  - pip install -q pycodestyle
+  - pip install -q -r requirements/dev.txt
+  - pip install -e .
+
+script:
+  - pycodestyle .
+  - py.test -q tests/
