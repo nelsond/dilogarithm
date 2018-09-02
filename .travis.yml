@@ -14,4 +14,4 @@ install:
 
 script:
   - pycodestyle .
-  - py.test -q tests/
+  - py.test -v tests/
