@@ -95,10 +95,9 @@ PyMODINIT_FUNC PyInit_dilogarithm(void)
  *     http://cmd.inp.nsk.su/old/cmd2/manuals/cernlib/shortwrups/node64.html */
 
  const double HF = 0.5;
- const double PIsq = M_PI*M_PI;
- const double PI3 = PIsq/3;
- const double PI6 = PIsq/6;
- const double PI12 = PIsq/12;
+ const double PI3 = M_PI*M_PI/3;
+ const double PI6 = M_PI*M_PI/6;
+ const double PI12 = M_PI*M_PI/12;
  const double C[20] = {
    0.42996693560813697,
    0.40975987533077105,
