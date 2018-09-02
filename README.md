@@ -1,4 +1,4 @@
-# Dilogarithm
+# Dilogarithm [![Build Status](https://travis-ci.org/nelsond/dilogarithm.svg?branch=master)](https://travis-ci.org/nelsond/dilogarithm)
 
 This module contains a Python implementation of the
 [Dilogarithm](https://en.wikipedia.org/wiki/Spence%27s_function) as a
