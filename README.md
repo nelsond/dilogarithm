@@ -12,6 +12,15 @@ implementation in [CERNLIB](http://cernlib.web.cern.ch). See the
 manual](http://cmd.inp.nsk.su/old/cmd2/manuals/cernlib/shortwrups/node64.html)
 for more details. CERNLIB is licensed under the [GNU GPL](http://cernlib.web.cern.ch/cernlib/conditions.html).
 
+**Note:** [`scipy.special.spence`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spence.html) is equivalent to the `rdilog` implementation in this module when changing the argument accordingly.
+
+```python
+from scipy.special import spence
+
+def rdilog(x):
+	return spence(1-x)
+```
+
 ## Requirements
 
 This module requires Python >= 3.4.
@@ -40,38 +49,22 @@ rdilog(xx) # => array([-12.23875518, -12.19242167, ... ])
 
 ## Performance
 
-The implementation is fairly fast compared to existing alternatives for
-Python (such as the Polylogarithm implementation in mpmath).
+The performance of this module is comparable to `scipy.special.spence` and faster than `mpmath.fp.polylogy`.
 
 ```python
 In [1]: from random import random
    ...: from dilogarithm import rdilog
+   ...: from scipy.special import spence
    ...: import mpmath as mp
 
 In [2]: %timeit rdilog(random()*1e6)
-829 ns ± 41 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+779 ns ± 22.3 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 
-In [3]: %timeit mp.fp.polylog(2, random()*1e6)
-14.8 µs ± 196 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-```
+In [3]: %timeit spence(random()*1e6)
+794 ns ± 19.1 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 
-The perfomance difference is even more apparent when calculating the
-Dilogarithm across a numpy array
-
-```python
-In [1]: from random import random
-   ...: from dilogarithm import rdilog
-   ...: import mpmath as mp
-   ...: import numpy as np
-
-In [2]: %timeit rdilog(np.random.rand(10000)*1e6)
-711 µs ± 16 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-
-In [3]: mp_polylog_vec = np.vectorize(mp.fp.polylog,
-   ...:                               otypes=(np.complex,), excluded=(0,))
-
-In [3]: %timeit mp_polylog_vec(2, np.random.rand(10000)*1e6)
-156 ms ± 1.17 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+In [4]: %timeit mp.fp.polylog(2, random()*1e6)
+14.7 µs ± 757 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 ```
 
 (MacBook Pro/2.6 GHz Intel Core i7)
